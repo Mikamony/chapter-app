@@ -77,7 +77,7 @@ textarea{min-height:90px;resize:vertical;line-height:1.45}
 .fab:active{transform:scale(.94)}
 /* Der Notiz-Knopf verschwindet auf Seiten, wo er Inhalt verdeckt. Auf der Quest-Seite lag er über der
    XP-Zahl und dem Abhak-Kreis der letzten Quest – Notizen sind über die Charakter-Seite erreichbar. */
-.phone:has(#s-friends.active) .fab,.phone:has(#s-cal.active) .fab,.phone:has(#s-quests.active) .fab{display:none}
+.phone:has(#s-me.active #s-friends.active) .fab,.phone:has(#s-cal.active) .fab,.phone:has(#s-quests.active) .fab{display:none}
 .fab svg{width:24px;height:24px;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
 /* World screen
@@ -717,6 +717,153 @@ button.lv-next{width:100%;text-align:left}
 @media (prefers-reduced-motion:reduce){.lpav,.rt-zzz text{animation:none!important}.rt-walker{display:none}}
 
 
+/* ===== extra-simple-a.css ===== */
+/* extra-simple-a.css — Vereinfachung A: 4 Tabs, «Ich»-Tab (Profil | Ziele | Freunde), Archiv-Sheet.
+   Nutzt nur bestehende Tokens (--surface, --line2, --muted, --amber …); kein neuer Stil. */
+
+/* Tab-Leiste: 4 Tabs dürfen etwas breiter sein, Touch-Ziel ≥ 44 px */
+.tab{max-width:88px;min-height:48px}
+
+/* ---------- Ich: Kopf ---------- */
+.me-top{display:flex;align-items:center;gap:14px;padding:22px 20px 14px;position:relative}
+.me-top::before{content:'';position:absolute;left:0;right:0;top:0;height:130px;background:radial-gradient(ellipse 55% 90% at 18% 0%,rgba(242,181,68,.08),transparent 70%);pointer-events:none}
+.me-av{width:64px;height:64px;flex-shrink:0;filter:drop-shadow(0 6px 14px rgba(242,181,68,.16))}
+.me-av svg{width:100%;height:100%;display:block}
+.me-id{flex:1;min-width:0}
+.me-id h1{font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.me-title{margin-top:4px;font-family:var(--serif);font-size:13px;color:var(--amber2);font-variation-settings:'opsz' 14;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.me-gear{width:44px;height:44px;flex-shrink:0;border-radius:var(--r-m);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background var(--fast),color var(--fast),transform var(--fast) var(--ease)}
+.me-gear svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.me-gear:active{transform:scale(.94);background:var(--surface2);color:var(--text)}
+
+/* ---------- Ich: Segment-Umschaltung (bleibt beim Scrollen oben) ---------- */
+.me-segbar{position:sticky;top:0;z-index:4;padding:6px 20px 10px;background:linear-gradient(to bottom,var(--bg) 78%,rgba(15,20,32,0))}
+.me-seg{width:100%}
+.me-seg button{flex:1;min-height:44px;font-size:14px}
+
+/* Panels: nur das aktive Segment ist sichtbar */
+.me-panel{display:none}
+.me-panel.active{display:block;animation:screen-in var(--base) ease-out both}
+
+/* Abschnittstitel innerhalb eines Segments (statt eigener H1) */
+.me-sec{padding:10px 20px 10px}
+.me-sec h3+.muted{margin-top:3px}
+
+/* Profil: Kennzahlen mit Luft, Links unten ruhig */
+#s-char .stats{margin-top:2px}
+#mood-insight:empty{display:none}
+#s-char .pad:has(#mood-insight:empty){display:none}
+.me-links{display:flex;gap:10px}
+.me-links .btn{flex:1;font-size:14px;padding:12px 10px;min-height:44px}
+
+/* Freunde: Personen als ruhige Zeilen */
+.np-row{align-items:center}
+.np-row .fb{min-width:0}
+.np-bar{height:3px;border-radius:2px;background:var(--line);overflow:hidden;margin-top:7px;max-width:140px}
+.np-bar i{display:block;height:100%;border-radius:2px}
+.np-btn{min-width:72px;font-size:13px}
+.np-btn.done{background:none;color:var(--yes);opacity:1}
+
+/* ---------- Archiv ---------- */
+.sa-entry,.sa-row{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;text-align:left;background:var(--surface);border:1px solid var(--line2);border-radius:var(--r-l);padding:10px 14px;transition:transform var(--fast) var(--ease),background var(--fast)}
+.sa-entry{margin-top:18px;box-shadow:var(--shadow-card)}
+.sa-entry:active,.sa-row:active{transform:scale(.985);background:#1E2636}
+.sa-list{display:flex;flex-direction:column;gap:8px}
+.sheet .sa-row{background:var(--surface2)}
+.sa-ic{width:36px;height:36px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--amber2)}
+.sheet .sa-ic{background:var(--surface)}
+.sa-ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sa-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sa-tx b{font-weight:600;font-size:15px}
+.sa-tx .muted{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sa-ch{color:var(--muted);display:flex;flex-shrink:0}
+.sa-back{display:inline-flex;align-items:center;min-height:44px;margin:-6px 0 2px -4px;padding:0 8px;border-radius:var(--r-m);font-size:14px;color:var(--amber2)}
+.sa-back:active{background:var(--surface2)}
+
+
+/* ===== extra-simple-b.css ===== */
+/* extra-simple-b.css — Vereinfachung B (Oktober 2026): «einfacher aussehen lassen».
+   Welt: die Szene ist der Star – Kopf mit Level-Ring links, rechts EINE Pille (Serie | Essenz) und ein runder
+   Einrichten-Knopf; Wetter + Tagesablauf als eine dezente Zeile unter der Szene; höchstens 2 Karten.
+   Heute: kein Filter, erledigte Quests kompakt/grau unten, schlanker Domänen-Kopf, ruhige Karten.
+   Wird vor extra-trade.css / extra-ui.css eingebunden – darum mit #id-Präfix, damit diese Regeln gewinnen. */
+
+/* ---------- Welt-Kopf rechts ---------- */
+#world-wrap .hud-r{flex-direction:row;align-items:center;gap:8px}
+#world-wrap .sb-pill{display:flex;align-items:center;min-height:44px;padding:0 14px 0 12px;background:var(--glass);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--line2);border-radius:22px;font-variant-numeric:tabular-nums;color:var(--text);transition:transform var(--fast) var(--ease)}
+#world-wrap .sb-pill:active{transform:scale(.97)}
+#world-wrap .sb-pill .streak{background:none;border:0;padding:0;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0;font-size:15px;gap:5px}
+#world-wrap .sb-pill .streak .flame{width:16px;height:16px}
+#world-wrap .sb-pill .shield{margin-left:2px;padding-left:0;border:0;font-size:11px;gap:1px;white-space:nowrap}
+#world-wrap .sb-pill .shield small{font-size:11px;font-weight:600}
+#world-wrap .sb-ess{display:flex;align-items:center;gap:5px;margin-left:10px;padding-left:10px;border-left:1px solid var(--line);font-weight:600;font-size:14px;color:var(--amber2)}
+#world-wrap .sb-ess svg{width:14px;height:14px}
+#world-wrap .edit-btn{width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;justify-content:center;gap:0}
+#world-wrap .edit-btn span{display:none}
+#world-wrap .edit-btn svg{width:18px;height:18px}
+
+/* ---------- Szene unten: nur noch Innen/Grundstück, mittig ---------- */
+#world-wrap .today-pill{display:none}
+#world-wrap .viewseg{left:50%;transform:translateX(-50%)}
+
+/* ---------- Eine dezente Zeile unter der Szene: Wetter · Tagesablauf ---------- */
+.sb-meta{display:flex;justify-content:center;align-items:center;min-height:44px;margin:-8px 16px 0;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden}
+#sb-meta .wx{position:static;background:none;border:0;padding:0;font-size:12px;font-weight:400;color:var(--muted);flex-shrink:0}
+#sb-meta .rt-chip{position:static;height:44px;line-height:44px;padding:0 4px;border:0;border-radius:0;background:none;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;font-size:12px;font-weight:400;color:var(--muted);max-width:none;min-width:0}
+#sb-meta .wx:not(:empty)+.rt-chip:not([hidden])::before{content:'·';margin:0 8px 0 4px}
+#sb-meta .rt-chip .rt-e{font-size:11px}
+#sb-meta .rt-chip:active{transform:none;opacity:.7}
+.phone:has(#world-wrap.editing) #sb-meta{visibility:hidden}
+.cz-hint{margin-top:2px}
+
+/* ---------- Karten unter der Szene ---------- */
+#world-below{padding-top:8px}
+.sb-prog{width:100%;text-align:left;padding:14px 16px}
+.sb-prog-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
+.sb-prog-h b{color:var(--amber2);font-weight:600}
+.sb-prog-h i{font-style:normal;color:var(--muted);margin:0 6px}
+.sb-prog-l{display:inline-flex;align-items:center;gap:2px;font-size:12px;color:var(--muted);white-space:nowrap}
+.sb-prog .lv-bar{margin-top:10px;height:4px}
+.sb-prog-s{font-size:12px;margin-top:8px}
+.sb-ev{padding:14px 16px}
+.sb-k{font-size:12px}
+.sb-evr{display:flex;gap:8px;margin-top:6px;font-size:14px;line-height:1.4}
+.sb-evi{flex-shrink:0}
+.sb-morning{text-align:center;padding:4px 0 12px;font-size:13px}
+
+/* ---------- Einrichten: Shop-Einstieg ---------- */
+.cz-shop{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:44px;margin:12px 0 2px;padding:0 14px;border-radius:var(--r-m);background:var(--surface2);border:1px solid var(--line2);font-size:14px;font-weight:500;color:var(--text);transition:transform var(--fast) var(--ease)}
+.cz-shop:active{transform:scale(.985)}
+.cz-shop-e{display:inline-flex;align-items:center;gap:6px;color:var(--amber2);font-variant-numeric:tabular-nums}
+
+/* ---------- Heute-Tab ---------- */
+#s-quests .qtools{justify-content:flex-end}
+/* Wochenziel in derselben ruhigen Kartenoptik wie die Domänen */
+#s-quests .boss{background:var(--surface);border:1px solid var(--line2);box-shadow:var(--shadow-card)}
+#s-quests .boss .bi{background:rgba(255,255,255,.05)}
+#s-quests .boss.done{border-color:var(--line2)}
+/* Domänen-Kopf: Name + n/m, Level klein */
+#s-quests .dom-h{padding:12px 14px 8px}
+#s-quests .dom-h .di{width:24px;height:24px;border-radius:8px}
+#s-quests .dom-h .di svg{width:14px;height:14px}
+#s-quests .dom-h h3{font-size:16px;display:flex;align-items:baseline;gap:8px;min-width:0}
+#s-quests .dom-h h3 .dl{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--muted);background:none;padding:0}
+#s-quests .dom-h .dc{font-size:13px;font-weight:600;color:var(--text)}
+/* Erledigte Quests: unten, kompakt, grau */
+#s-quests .quest.done{min-height:44px;padding-top:4px;padding-bottom:4px}
+#s-quests .quest.done .chk{width:28px;height:28px;margin:0 6px;transform:none;box-shadow:none}
+#s-quests .quest.done .chk svg{width:12px;height:12px}
+#s-quests .quest.done .qi{height:28px;background:none}
+#s-quests .quest.done .qi svg{width:16px;height:16px;stroke:var(--muted)}
+#s-quests .quest.done .qn{font-size:14px;font-weight:400}
+#s-quests .quest.done .qm{display:none}
+#s-quests .quest.done .xp{font-size:12px;font-weight:500}
+#s-quests .quest:not(.done)+.quest.done,#s-quests .tr-amp+.quest.done{border-top-color:var(--line)}
+/* Ohne Filter bleibt nur «Verlauf»: rechts neben die Überschrift statt einer eigenen Zeile */
+#s-quests{position:relative}
+#s-quests .qtools{position:absolute;top:22px;right:20px;padding:0}
+
+
 /* ===== extra-trade.css ===== */
 /* extra-trade.css — Handelstag-Ampel, Comeback-Karte, Glut-Chip (trade.js) */
 
@@ -960,7 +1107,6 @@ button.lv-next{width:100%;text-align:left}
     <div class="pad" style="padding-bottom:12px"><h1>Heute</h1><div class="muted" id="q-date"></div></div>
     <div class="qhero" id="qhero"></div>
     <div class="qtools">
-      <div class="seg" id="qseg"><button class="on" onclick="qFilter('all',this)">Alle</button><button onclick="qFilter('open',this)">Offen</button><button onclick="qFilter('done',this)">Erledigt</button></div>
       <button class="undo-btn" id="undo-btn" onclick="openHistory()"><svg viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg>Verlauf</button>
     </div>
     <div class="boss" id="boss"></div>
@@ -977,64 +1123,47 @@ button.lv-next{width:100%;text-align:left}
     <div class="pad" id="cal-summary"></div>
   </div>
 
-  <!-- ZIELE -->
-  <div class="screen" id="s-goals">
-    <div class="pad"><h1 id="goals-h">Ziele</h1><div class="muted" id="goals-sub"></div></div>
-    <div id="goal-list"></div>
-    <div style="padding:0 20px"><button class="btn block" onclick="addGoal()">Ziel hinzufügen</button></div>
-  </div>
+  <!-- ICH: Profil, Ziele und Freunde unter einem Tab. Die Panels behalten die alten Ids (s-char, s-goals, s-friends),
+       go('char'|'goals'|'friends') öffnet «Ich» mit dem passenden Segment. -->
+  <div class="screen" id="s-me">
+    <div class="me-top">
+      <div class="me-av" id="avatar-big"></div>
+      <div class="me-id"><h1 id="char-name">Du</h1><div class="me-title" id="char-title"></div></div>
+      <button class="me-gear" onclick="ch_openSettings()" aria-label="Einstellungen &amp; Daten"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    </div>
+    <div class="me-segbar"><div class="seg me-seg" id="me-seg" role="tablist"><button data-s="char" class="on" onclick="go('char')">Profil</button><button data-s="goals" onclick="go('goals')">Ziele</button><button data-s="friends" onclick="go('friends')">Freunde</button></div></div>
 
-  <!-- CHARAKTER -->
-  <div class="screen" id="s-char">
-    <div class="char-top">
-      <div class="avatar-big" id="avatar-big"></div>
-      <h1 id="char-name">Du</h1>
-      <div style="margin-top:8px"><span class="title-badge" id="char-title"></span></div>
+    <!-- Profil -->
+    <div class="me-panel active" id="s-char">
+      <div class="pad" style="padding-top:6px;padding-bottom:0"><div class="card" style="padding:12px"><svg id="radar" viewBox="0 0 300 220" style="width:100%;height:200px"></svg></div></div>
+      <div class="stats" id="stats"></div>
+      <div class="pad" style="padding-bottom:0"><div id="mood-insight"></div></div>
+      <div class="pad" style="padding-bottom:6px;padding-top:8px"><h3>Trophäen</h3></div>
+      <div class="trophies" id="trophies"></div>
+      <div class="pad" style="padding-top:14px"><div class="me-links" id="avcard"></div></div>
     </div>
-    <div class="pad" style="padding-top:8px;padding-bottom:4px"><div class="card" id="avcard"></div></div>
-    <div class="pad" style="padding-top:0"><div class="card" style="padding:12px"><svg id="radar" viewBox="0 0 300 220" style="width:100%;height:200px"></svg></div></div>
-    <div id="traits-wrap"></div>
-    <div class="stats" id="stats"></div>
-    <div class="pad" style="padding-bottom:0"><div id="mood-insight"></div></div>
-    <div class="pad" style="padding-bottom:6px"><h3>Trophäen</h3></div>
-    <div class="trophies" id="trophies"></div>
-    <div style="height:10px"></div>
-    <div class="set-sec">
-      <h3>Werkzeuge</h3>
-      <div class="split" style="margin-top:10px"><button class="btn block" onclick="openTimeMachine()"><svg class="bi" viewBox="0 0 24 24"><path d="M6 2h12M6 22h12M7 2c0 5 10 6 10 10S7 17 7 22M17 2c0 5-10 6-10 10s10 5 10 10"/></svg> Zeitmaschine</button><button class="btn block" onclick="openWeightLog()"><svg class="bi" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="4"/><path d="M8.5 10a5 5 0 0 1 7 0l-2 3h-3z"/></svg> Gewicht</button></div>
-    </div>
-    <div class="set-sec">
-      <h3>Einstellungen &amp; Daten</h3>
-      <div class="muted">Deine Daten liegen nur auf diesem Gerät. Exportiere sie regelmässig als Datei – so nimmst du deine Welt aufs nächste Handy mit.</div>
-      <div class="set-lbl">Backup</div>
-      <div class="split"><button class="btn block" onclick="exportData()">Exportieren</button><label class="btn block" style="cursor:pointer">Importieren<input type="file" accept="application/json" style="display:none" onchange="importData(this)"></label></div>
-      <div class="set-lbl">Demo</div>
-      <div class="split"><button class="btn block" onclick="seedDemo(45)">45 Tage</button><button class="btn block" onclick="seedDemo(420)">Endgame</button></div>
-      <div class="muted" style="margin-top:8px">Beispiel-Verläufe füllen Welt und Kalender. Deine echten Daten werden vorher gesichert.</div>
-      <div class="set-lbl">Gefahrenzone</div>
-      <button class="btn block danger" onclick="resetAll()">Alles zurücksetzen</button>
-    </div>
-  </div>
 
-  <!-- FREUNDE -->
-  <div class="screen" id="s-friends">
-    <div class="pad"><h1>Freunde</h1><div class="muted">Menschen in deinem Leben und deine Bestenliste</div></div>
-    <div id="friend-list"></div>
-    <div style="padding:0 20px"><button class="btn block" onclick="openFriendAdd()">Freund hinzufügen</button></div>
-    <div class="pad">
-      <button class="btn block" style="margin-top:10px" onclick="openMyCode()">Meinen Code teilen</button>
-      <div class="muted" style="margin-top:10px">Chapter läuft ohne Server. Um euch zu vergleichen, tauscht ihr euren Code aus – z. B. per Chat – und fügt ihn hier ein. Die Werte sind ein Schnappschuss, kein Live-Abgleich.</div>
+    <!-- Ziele -->
+    <div class="me-panel" id="s-goals">
+      <div class="me-sec"><h3 id="goals-h">Ziele</h3><div class="muted" id="goals-sub"></div></div>
+      <div id="goal-list"></div>
+      <div style="padding:0 20px"><button class="btn block" onclick="addGoal()">Ziel hinzufügen</button></div>
+    </div>
+
+    <!-- Freunde -->
+    <div class="me-panel" id="s-friends">
+      <div id="friend-list"></div>
+      <div class="split" style="padding:4px 20px 0"><button class="btn block" onclick="openFriendAdd()">Freund hinzufügen</button><button class="btn block" onclick="openMyCode()">Code teilen</button></div>
+      <div class="muted" style="padding:12px 20px 0">Chapter läuft ohne Server. Ihr tauscht eure Codes aus, z. B. per Chat. Die Werte sind ein Schnappschuss, kein Live-Abgleich.</div>
     </div>
   </div>
 
   <!-- TABS -->
   <nav class="tabbar">
     <button class="tab on" data-t="world" onclick="go('world')"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Welt</button>
-    <button class="tab" data-t="quests" onclick="go('quests')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>Quests</button>
+    <button class="tab" data-t="quests" onclick="go('quests')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>Heute</button>
     <button class="tab" data-t="cal" onclick="go('cal')"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Kalender</button>
-    <button class="tab" data-t="goals" onclick="go('goals')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg>Ziele</button>
-    <button class="tab" data-t="char" onclick="go('char')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>Charakter</button>
-    <button class="tab" data-t="friends" onclick="go('friends')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Freunde</button>
+    <button class="tab" data-t="me" onclick="go('me')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>Ich</button>
   </nav>
   <button class="fab" onclick="openNotes()" aria-label="Notiz"><svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg></button>
 
@@ -1651,7 +1780,11 @@ function cz_renderSheet() {
     : cz_tab === 'avatar' ? cz_tabAvatar()
     : cz_tab === 'fahrzeuge' ? cz_tabFahrzeuge()
     : cz_tabStile(st);
-  sh.innerHTML = `<div class="handle"></div><div class="cz-head"><div><h2>Einrichten</h2><div class="muted" style="margin-top:2px">Kapitel ${chN} · ${ch[2]}</div></div>${sw}</div>${seg}<div class="cz-body">${body}</div>`;
+  // Shop-Einstieg (die Shop-Karte unter der Szene ist weg): eine ruhige Zeile mit dem Essenz-Stand
+  const shop = typeof openShop === 'function'
+    ? `<button class="cz-shop" onclick="cz_open=false;openShop()"><span>Shop</span><span class="cz-shop-e">✦ ${fmtN(Math.max(0, st.essence))}<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span></button>`
+    : '';
+  sh.innerHTML = `<div class="handle"></div><div class="cz-head"><div><h2>Einrichten</h2><div class="muted" style="margin-top:2px">Kapitel ${chN} · ${ch[2]}</div></div>${sw}</div>${shop}${seg}<div class="cz-body">${body}</div>`;
 }
 
 // Eine Farbfeld-Reihe. onTap(id) liefert den onclick-Code.
@@ -2876,9 +3009,9 @@ function cz_dragEnd(d, commit) {
 }
 
 // ---------- Hinweis «Tippe etwas an» ----------
-// Der Hinweis steht als schmale Zeile UNTER der Szene (verdeckt also nichts) und verschwindet
-// beim ersten Tipp in der Welt. Endgültig erledigt ist er erst, wenn wirklich einmal etwas
-// geändert wurde (S.custom.edits, siehe cz_noteEdit) – vorher zeigt ihn der nächste Start wieder.
+// Der Hinweis steht als schmale Zeile UNTER der Szene (verdeckt also nichts). Er erscheint nur, bis
+// Mika einmal etwas angetippt oder ihn geschlossen hat: der erste Tipp (oder ✕) merkt sich das
+// dauerhaft im localStorage-Flag – danach kommt er auch beim nächsten Start nicht wieder.
 const CZ_HINT_KEY = 'chapter:cz:hint';
 let cz_hintOn = false;   // in dieser Sitzung gezeigt oder weggetippt → nicht noch einmal einblenden
 let cz_hintVis = false;  // gerade sichtbar
@@ -2906,11 +3039,12 @@ function cz_hintShow() {
   el.hidden = false;
   setTimeout(() => { if (el.classList) el.classList.add('show'); }, 30);
 }
-// Tipp erkannt (oder Sheet geöffnet): Hinweis für diese Sitzung weg – aber noch nicht abgehakt.
+// Tipp erkannt, ✕ oder Sheet geöffnet, während der Hinweis sichtbar war: endgültig erledigt.
 function cz_hintDone() {
   cz_hintOn = true;
   if (!cz_hintVis) return;
   cz_hintVis = false;
+  try { localStorage.setItem(CZ_HINT_KEY, '1'); } catch (e) {}
   const el = document.getElementById('cz-hint');
   if (el && el.classList) { el.classList.remove('show'); setTimeout(() => { el.hidden = true; }, 250); }
 }
@@ -25185,7 +25319,6 @@ const WORLD_DEFS = '<defs>'
   + '<linearGradient id="water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5FB8E8"/><stop offset="1" stop-color="#2E7FB8"/></linearGradient>'
   + '</defs>';
 
-const AMBER_BORDER = 'border:1px solid rgba(242,181,68,.35)';
 const CHEVRON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>';
 
 function renderWorld(st) {
@@ -25199,10 +25332,12 @@ function renderWorld(st) {
   const C = getCustom(worldView, chN);
   const scene = worldView === 'out' ? renderExterior(st, C) : renderInterior(st, C);
   document.getElementById('world-svg').innerHTML = WORLD_DEFS + scene;
+  try { sb_hudLayout(); } catch (e) {}
   renderHud(st, ch);
   // Hooks: Status-Chip Tagesablauf (routine.js) und XP-Anzeige (Level-Team)
   if (typeof rt_hud === 'function') { try { rt_hud(st); } catch (e) {} }
   if (typeof lv_hud === 'function') { try { lv_hud(st); } catch (e) {} }
+  try { sb_metaLine(); } catch (e) {}
   document.getElementById('world-below').innerHTML = worldCards(st);
   // Auswahlring im Einrichten-Modus nach jedem Neuzeichnen wiederherstellen
   if (typeof cz_markSel === 'function') cz_markSel();
@@ -25219,7 +25354,8 @@ function renderHud(st, ch) {
   document.getElementById('chapter').textContent = `Kapitel ${ch[1]} · ${ch[2]}`;
   document.getElementById('streak').textContent = st.streak;
   const shield = document.getElementById('shield');
-  shield.innerHTML = st.shields ? '🛡'.repeat(st.shields) : '';
+  shield.innerHTML = st.shields ? '🛡' + (st.shields > 1 ? '<small>' + st.shields + '</small>' : '') : ''; // ein Schild + Anzahl, damit die Pille einzeilig bleibt
+  shield.setAttribute('aria-label', st.shields + ' Streak-Schilde');
   shield.style.display = st.shields ? '' : 'none';
   document.getElementById('wx').textContent = weather(st.today).name + ' · ' + SEASON_NAME[season(st.today)];
   // Essenz kann durch zurückgenommene Quests negativ werden – angezeigt wird mindestens 0.
@@ -25235,72 +25371,85 @@ function renderHud(st, ch) {
   document.getElementById('pill-xp').textContent = st.perDay[st.today] ? st.perDay[st.today].xp : 0;
 }
 
+// ---------- Kopf und Meta-Zeile (Vereinfachung B) ----------
+// Die Szene ist der Star. Kopf: links Level-Ring + Kapitel, rechts EINE Pille «🔥 Serie | ✦ Essenz» (Tipp → Shop)
+// und «Einrichten» als runder Icon-Knopf. head.html bleibt unverändert – die Elemente werden hier einmal umgehängt.
+function sb_hudLayout() {
+  if (document.getElementById('sb-pill')) return;
+  const hr = document.querySelector('#world-wrap .hud-r');
+  const streak = hr && hr.querySelector ? hr.querySelector('.streak') : null;
+  const essEl = document.getElementById('ess');
+  const essBtn = essEl && essEl.closest ? essEl.closest('button') : null;
+  if (!hr || !streak || !essBtn || !document.createElement) return;
+  const pill = document.createElement('button');
+  pill.id = 'sb-pill';
+  pill.className = 'sb-pill';
+  pill.setAttribute('onclick', 'openShop()');
+  pill.setAttribute('aria-label', 'Serie und Essenz – Shop öffnen');
+  hr.insertBefore(pill, hr.firstChild);
+  pill.appendChild(streak);
+  const ess = document.createElement('span');
+  ess.className = 'sb-ess';
+  while (essBtn.firstChild) ess.appendChild(essBtn.firstChild);
+  pill.appendChild(ess);
+  essBtn.remove();
+  const eb = document.getElementById('btn-edit');
+  if (eb) eb.setAttribute('aria-label', 'Einrichten: Farben, Möbel, Figur, Stile und Shop');
+}
+
+// Wetter und Tagesablauf: eine einzige dezente Zeile unter der Szene statt zweier Chips im Bild.
+// rt_hud (routine.js) hängt den Chip bei jedem Zeichnen zurück in die Szene – darum hier nach jedem Zeichnen umhängen.
+function sb_metaLine() {
+  const wrap = document.getElementById('world-wrap');
+  if (!wrap || !wrap.parentNode || !document.createElement) return;
+  let line = document.getElementById('sb-meta');
+  if (!line) {
+    line = document.createElement('div');
+    line.id = 'sb-meta';
+    line.className = 'sb-meta';
+    wrap.parentNode.insertBefore(line, wrap.nextSibling);
+  }
+  const wx = document.getElementById('wx'), rt = document.getElementById('rt-chip');
+  if (wx && wx.parentNode !== line) line.appendChild(wx);
+  if (rt && rt.parentNode !== line) line.appendChild(rt);
+}
+
 // ---------- Karten unter der Szene ----------
+// Höchstens zwei Karten: Fortschritt (immer) und Ereignis (nur wenn es eins gibt). Abends der Knopf «Tag abschliessen».
+// Shop, Staub und die Kacheln (Neuigkeiten/Geschichte/Reisen) sind nicht mehr auf der Welt: Shop über die Pille und
+// über Einrichten, die Kacheln im Archiv (Kalender-Tab).
 function eventsCard(st, night) {
   const evs = dailyEvents(st.today).map(e => ev_display(e, night));
   if (!evs.length) return '';
-  return `<div class="card" style="${AMBER_BORDER}"><div class="muted">${night ? 'Heute war' : 'Heute'}</div>`
-    + evs.map(e => `<div style="margin-top:6px"><b>${e.icon} ${e.n}</b><div class="muted" style="margin-top:2px">${e.d}</div></div>`).join('')
+  return `<div class="card sb-ev"><div class="muted sb-k">${night ? 'Heute war' : 'Heute'}</div>`
+    + evs.map(e => `<div class="sb-evr"><span class="sb-evi">${e.icon}</span><span><b>${e.n}</b><span class="muted"> · ${e.d}</span></span></div>`).join('')
     + `</div>`;
 }
 
-// Karte «Beim nächsten Level-Up»: fehlende XP, Prognose bei deinem Tempo und die nächste Belohnung (rewards.js)
-function levelPathCard(st) {
-  return typeof lv_nextCard === 'function' ? lv_nextCard(st) : '';
-}
-
-// «Nächster Ausbau» (aus dem Kapitel-Plan) und das nächste Kapitel in einer Karte
-function progressCard(st) {
-  const next = nextUnlock(st);
-  const nextCh = CHAPTERS.find(x => x[0] > st.level);
-  const serif = 'font-family:var(--serif);font-size:18px;margin-top:4px';
-  let h = '<div class="card">';
-  if (next) h += `<div class="muted">Nächster Ausbau</div><div style="${serif}">${next}</div>`;
-  if (nextCh) {
-    h += `<div class="muted"${next ? ' style="margin-top:12px"' : ''}>Nächstes Kapitel · ab Level ${nextCh[0]}</div>`
-      + `<div style="${serif}">Kapitel ${nextCh[1]} · ${nextCh[2]}</div>`
-      + (nextCh[3] ? `<div class="muted" style="margin-top:2px">${nextCh[3]}</div>` : '');
-  }
-  if (!next && !nextCh) h += `<div style="${serif}">Alles ausgebaut – der Gipfel ist erreicht</div>`;
-  return h + '</div>';
-}
-
-function shopCard(st) {
-  const afford = SHOP.filter(x => !owns(x.id) && x.lvl <= st.level && x.price <= st.essence);
-  if (!afford.length) return '';
-  return `<button class="card" style="width:100%;text-align:left" onclick="openShop()"><div class="muted">Im Shop leistbar</div>`
-    + `<div style="margin-top:4px">${afford.slice(0, 3).map(x => x.i + ' ' + x.n).join(' · ')}${afford.length > 3 ? ' …' : ''}</div></button>`;
-}
-
-function dustCard(st) {
-  const dusty = Object.keys(st.dust).filter(d => st.dust[d] && st.totalQuests > 0);
-  if (!dusty.length) return '';
-  return `<div class="card" style="border:1px solid var(--line)"><div class="muted">Staub liegt auf</div>`
-    + `<div style="margin-top:4px">${dusty.map(d => DOM[d].icon + ' ' + DOM[d].name).join(', ')}. Eine Quest genügt, um die Zone zu beleben.</div></div>`;
-}
-
-// Drei gleich grosse Kacheln: Neuigkeiten, Geschichte, Reisen – je mit einer Zeile Vorschau
-function featureTiles() {
-  const trips = (S.trips || []).length, lore = (S.lore || []).length;
-  // Vorschau = Anzahl der Einträge (der letzte Satz wurde in der schmalen Kachel auf «Mika erreich…» gekürzt und sagte nichts)
-  if (typeof cf_ensure === 'function') cf_ensure();
-  const feedN = (typeof S.feed !== 'undefined' && Array.isArray(S.feed)) ? S.feed.length : 0;
-  const tile = (title, preview, action) => `<button class="card" style="flex:1;min-width:0;text-align:left;margin-bottom:0" onclick="${action}">`
-    + `<div style="display:flex;justify-content:space-between;align-items:center;gap:4px"><b style="font-size:13px">${title}</b><span class="muted">${CHEVRON}</span></div>`
-    + `<div class="muted" style="margin-top:4px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${preview}</div></button>`;
-  return `<div style="display:flex;gap:8px;margin-bottom:12px">`
-    + tile('Neuigkeiten', feedN ? plural(feedN, 'Eintrag', 'Einträge') : 'Noch leer', 'openFeed()')
-    + tile('Geschichte', lore ? plural(lore, 'Eintrag', 'Einträge') : 'Beginnt bald', 'openLore()')
-    + tile('Reisen', trips ? plural(trips, 'Ort', 'Orte') : 'Noch keine', 'openTravel()')
-    + `</div>`;
+// Eine kompakte Karte: «Heute 3/12 · 105 XP», Level-Balken, «Nächstes Level in N XP». Tipp öffnet den Level-Pfad.
+function sb_progressCard(st) {
+  const td = S.days[st.today] || [];
+  const xp = st.perDay[st.today] ? st.perDay[st.today].xp : 0;
+  const L = st.level, master = L >= MAX_LEVEL;
+  const lo = master ? xpForLevel(MAX_LEVEL) + (st.stars || 0) * MASTER_STAR_XP : xpForLevel(L);
+  const hi = master ? lo + MASTER_STAR_XP : xpForLevel(L + 1);
+  const pct = Math.max(0, Math.min(100, (st.total - lo) / (hi - lo) * 100));
+  const need = Math.max(0, hi - st.total);
+  const days = typeof lv_daysTo === 'function' ? lv_daysTo(st, hi) : null;
+  const when = typeof lv_daysTxt === 'function' && days !== null && days > 0 ? ' · ' + lv_daysTxt(days) : '';
+  const next = master ? `Nächster Meisterstern in ${fmtN(need)} XP` : `Nächstes Level in ${fmtN(need)} XP`;
+  return `<button class="card sb-prog" onclick="openLevelPath()" aria-label="Level-Pfad öffnen">`
+    + `<div class="sb-prog-h"><span>Heute <b>${td.length}/${QUESTS.length}</b><i>·</i><b>${fmtN(xp)}</b> XP</span>`
+    + `<span class="sb-prog-l">${master ? `Meistersterne ★${st.stars || 0}` : `Level ${L + 1}`}${CHEVRON}</span></div>`
+    + `<div class="lv-bar"><i style="width:${pct.toFixed(1)}%"></i></div>`
+    + `<div class="muted sb-prog-s">${next}${when}</div></button>`;
 }
 
 function worldCards(st) {
-  const { night, morning } = timeOfDay();
-  const td = S.days[st.today] || [];
-  let b = eventsCard(st, night && (timeOfDay().h >= 20 || timeOfDay().h < 4)) + levelPathCard(st) + progressCard(st) + shopCard(st) + dustCard(st) + featureTiles();
+  const tod = timeOfDay();
+  let b = sb_progressCard(st) + eventsCard(st, tod.night && (tod.h >= 20 || tod.h < 4));
   if (cd_available()) b += cd_worldButton(st);
-  else if (morning) b += `<div class="muted" style="text-align:center;padding:4px 0 12px">Guten Morgen. Ein kleiner Schritt reicht für den Anfang.</div>`;
+  else if (tod.morning) b += `<div class="muted sb-morning">Guten Morgen. Ein kleiner Schritt reicht für den Anfang.</div>`;
   return b;
 }
 
@@ -26423,14 +26572,7 @@ function undoByT(t) {
 /* ===================== quests.js ===================== */
 // quests.js — Quest-Tab (heutiger Tag), Quest an/aus, Fortschritts-Meldungen (checkProgress) und Toasts.
 
-let qf = 'all'; // Filter: all | open | done
-
-function qFilter(f, el) {
-  qf = f;
-  document.querySelectorAll('#qseg button').forEach(b => b.classList.remove('on'));
-  el.classList.add('on');
-  renderQuests(stats());
-}
+// Kein Filter «Alle/Offen/Erledigt» mehr: erledigte Quests rutschen in ihrer Domäne nach unten und werden kompakt/grau.
 
 const CHECK_SVG = '<span class="chk"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>';
 const FLAME_SVG = '<svg viewBox="0 0 24 24"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 1-3s0 3 2 3c0-4-1-6 2-11z"/></svg>';
@@ -26441,18 +26583,18 @@ function questHero(st, done) {
   const xp = st.perDay[st.today] ? st.perDay[st.today].xp : 0;
   const circ = 2 * Math.PI * 36;
   const offset = circ - circ * n / QUESTS.length;
-  const chN = chapterNum(st.level);
-  const qLabel = qName(QMAP[qotd(st.today)], chN).split(' ').slice(0, 2).join(' ');
   const ring = `<div class="qring"><svg viewBox="0 0 84 84">`
     + `<circle cx="42" cy="42" r="36" stroke="#2C3549" stroke-width="6" fill="none"/>`
     + `<circle cx="42" cy="42" r="36" stroke="${perfect ? '#F2B544' : '#ECE8DF'}" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${offset}" style="transition:stroke-dashoffset .5s"/>`
     + `</svg><div class="c">${n}<small>von ${QUESTS.length}</small></div></div>`;
+  // Höchstens zwei Chips, das Wichtigste zuerst: Serie (oder Glut, wenn sie gerade brennt) und Perfekter Tag.
+  // Die Quest des Tages steht schon als «2× HEUTE» an ihrer Zeile.
   const chips = [
-    `<span class="chip${st.streak >= 3 ? ' on' : ''}">Serie ×${streakMult(st.streak).toFixed(1)}</span>`,
-    st.ember > 0 ? `<span class="chip tr-glutchip" title="${tr_emberNeedTxt(st)}">🔥 Glut ${st.ember} · ${tr_emberNeedTxt(st).replace(/ mit .*/, '')}</span>` : '',
-    `<span class="chip${perfect ? ' on' : ''}">${perfect ? 'Perfekter Tag ★' : `Perfekter Tag ab ${PERFECT_MIN} von ${QUESTS.length}`}</span>`,
-    `<span class="chip on">2× ${qLabel}</span>`,
-    n === QUESTS.length ? '<span class="chip on">Alles erledigt</span>' : '',
+    st.ember > 0
+      ? `<span class="chip tr-glutchip" title="${tr_emberNeedTxt(st)}">🔥 Glut ${st.ember} · ${tr_emberNeedTxt(st).replace(/ mit .*/, '')}</span>`
+      : `<span class="chip${st.streak >= 3 ? ' on' : ''}">Serie ×${streakMult(st.streak).toFixed(1)}</span>`,
+    n === QUESTS.length ? '<span class="chip on">Alles erledigt ★</span>'
+      : `<span class="chip${perfect ? ' on' : ''}">${perfect ? 'Perfekter Tag ★' : `Perfekter Tag ab ${PERFECT_MIN}`}</span>`,
   ].join('');
   // Tages-XP antippbar → Aufschlüsselung (Basis, Serie, Quest des Tages, Perfekter Tag, Domänen-Bonus, Events, Wochenziel)
   return ring + `<div class="hx"><button class="big lv-xpbtn" onclick="lv_openBreakdown()" aria-label="Aufschlüsselung der Tages-XP">${xp}<span>XP heute ›</span></button><div class="chips">${chips}</div></div>`;
@@ -26499,18 +26641,21 @@ function domainNextLine(st, d) {
 
 function domainBlock(d, st, done) {
   const qs = QUESTS.filter(q => q.d === d);
-  const vis = qs.filter(q => qf === 'all' || (qf === 'open' ? !done.includes(q.id) : done.includes(q.id)));
-  // Handelstag-Ampel (trade.js) sitzt als erste Zeile im Trading-Block; sie zählt als «erledigt», sobald bewertet.
-  const ac = d === 'trading' ? tr_ampelCard(st.today) : '';
-  const amp = ac && (qf === 'all' || (qf === 'open') === !tr_ampelGet(st.today)) ? ac : '';
-  if (!vis.length && !amp) return '';
-  const dd = qs.filter(q => done.includes(q.id)).length;
-  return `<div class="dom" style="--dc:${DOM[d].hex}"><div class="dom-h"><span class="di">${ico(d)}</span><h3>${DOM[d].name}</h3>`
-    + `<span class="dc">${dd}/${qs.length}</span><span class="dl">Level ${st.dlvl[d]}</span></div>`
+  // Offene zuerst, erledigte rutschen nach unten (Reihenfolge innerhalb der Gruppen bleibt).
+  const open = qs.filter(q => !done.includes(q.id)), fin = qs.filter(q => done.includes(q.id));
+  // Handelstag-Ampel (trade.js) sitzt als erste Zeile im Trading-Block; bewertet rutscht sie zu den erledigten.
+  const amp = d === 'trading' ? tr_ampelCard(st.today) : '';
+  const ampDone = !!(amp && tr_ampelGet(st.today));
+  if (!qs.length && !amp) return '';
+  return `<div class="dom" style="--dc:${DOM[d].hex}"><div class="dom-h"><span class="di">${ico(d)}</span>`
+    + `<h3>${DOM[d].name}<span class="dl">Level ${st.dlvl[d]}</span></h3>`
+    + `<span class="dc">${fin.length}/${qs.length}</span></div>`
     + `<div class="dbar"><i style="width:${domainProgress(st, d).toFixed(1)}%"></i></div>`
     + domainNextLine(st, d)
-    + amp
-    + vis.map(q => questRow(q, st, done)).join('') + '</div>';
+    + (ampDone ? '' : amp)
+    + open.map(q => questRow(q, st, done)).join('')
+    + (ampDone ? amp : '')
+    + fin.map(q => questRow(q, st, done)).join('') + '</div>';
 }
 
 function renderQuests(st) {
@@ -26520,9 +26665,7 @@ function renderQuests(st) {
   const boss = document.getElementById('boss');
   // Nach einem Tag mit 0 Quests kommt zuerst die ruhige Comeback-Karte (trade.js); erst «Zurück im Spiel» öffnet die Liste.
   const comeback = tr_needComeback(st);
-  const seg = document.getElementById('qseg');
   hero.style.display = boss.style.display = comeback ? 'none' : '';
-  if (seg) seg.style.display = comeback ? 'none' : '';
   if (comeback) {
     document.getElementById('quest-list').innerHTML = tr_comebackCard(st);
     document.getElementById('undo-btn').disabled = !(S.history && S.history.length);
@@ -26534,8 +26677,8 @@ function renderQuests(st) {
   boss.style.padding = st.bossDone ? '8px 14px' : '';
   boss.innerHTML = bossCard(st);
   const h = Object.keys(DOM).map(d => domainBlock(d, st, done)).join('');
-  document.getElementById('quest-list').innerHTML = (h || '<div class="muted" style="text-align:center;padding:30px">Nichts in dieser Ansicht.</div>')
-    + (qf === 'all' ? renderShadowSection() + `<button class="tr-linebtn" onclick="tr_openLine()">✎ Mein Comeback-Satz</button>` : '');
+  document.getElementById('quest-list').innerHTML = h + renderShadowSection()
+    + `<button class="tr-linebtn" onclick="tr_openLine()">✎ Mein Comeback-Satz</button>`;
   document.getElementById('undo-btn').disabled = !(S.history && S.history.length);
 }
 
@@ -26925,7 +27068,8 @@ function renderCal(st) {
     + statTile(mdays, mdays === 1 ? 'aktiver Tag' : 'aktive Tage')
     + statTile(mperf, mperf === 1 ? 'perfekter Tag' : 'perfekte Tage')
     + statTile(st.longest, 'längste Serie')
-    + `</div>` + tr_ampelFooter(calY, calM);
+    + `</div>` + tr_ampelFooter(calY, calM)
+    + (typeof archiveEntry === 'function' ? archiveEntry() : '');
 }
 
 function dayQuestButton(k, q, on) {
@@ -27518,7 +27662,8 @@ async function goalNewYear() {
 }
 
 /* ===================== character.js ===================== */
-// character.js — Charakter-Tab: Avatar-Büste, Radar der Domänen-Level, Persönlichkeit, Kennzahlen, Trophäen.
+// character.js — «Ich»-Tab: Kopf (Avatar, Name, Titel), Segment Profil (Radar, Kennzahlen, Trophäen) und das Sheet
+// «Einstellungen & Daten» (Zahnrad oben rechts). Die Persönlichkeit (traits.js) wird nicht mehr angezeigt.
 
 // Low-Poly-Büste (gleiche Figur wie in der Welt), in einem runden Rahmen
 function avatarBust() {
@@ -27574,23 +27719,36 @@ function statTile(v, label) {
 
 const RARITY = { bronze: 'Bronze', silver: 'Silber', gold: 'Gold', legend: 'Legendär' };
 
+// Kopf des Ich-Tabs – gilt für alle drei Segmente (init.js ruft ihn nach jedem Zeichnen eines Segments auf).
+function me_head(st) {
+  st = st || stats();
+  const n = document.getElementById('char-name'), t = document.getElementById('char-title'), a = document.getElementById('avatar-big');
+  if (n) n.textContent = S.name || 'Du';
+  if (t) t.textContent = titleOf(st.level) + ' · Level ' + st.level;
+  if (a) a.innerHTML = avatarBust();
+}
+
+// Stimmung & Training nur zeigen, wenn der Unterschied deutlich ist (mindestens 15 Prozentpunkte).
+const CH_MOOD_GAP = 15;
+function ch_moodText(st) {
+  const mi = typeof moodInsight === 'function' ? moodInsight(st) : null;
+  const m = mi && /(\d+)\s*%\D+?(\d+)\s*%/.exec(mi);
+  return m && Number(m[1]) - Number(m[2]) >= CH_MOOD_GAP ? mi : null;
+}
+
 function renderChar(st) {
-  document.getElementById('char-name').textContent = S.name || 'Du';
-  document.getElementById('char-title').textContent = titleOf(st.level) + ' · Level ' + st.level;
-  document.getElementById('avatar-big').innerHTML = avatarBust();
+  me_head(st);
   // Aussehen wird nur an einer Stelle gewählt: Einrichten › Avatar
   document.getElementById('avcard').innerHTML = `<button class="btn block" onclick="openCustomize();cz_setTab('avatar')">Aussehen ändern</button>`
-    + (typeof rt_openSheet === 'function' ? `<button class="btn block" style="margin-top:8px" onclick="rt_openSheet()">Tagesablauf</button>` : '');
+    + (typeof rt_openSheet === 'function' ? `<button class="btn block" onclick="rt_openSheet()">Tagesablauf</button>` : '');
   const radarEl = document.getElementById('radar');
   radarEl.innerHTML = radarSvg(st);
   if (radarSvg.vb && radarEl.setAttribute) radarEl.setAttribute('viewBox', radarSvg.vb);
-  const tw = document.getElementById('traits-wrap');
-  if (tw) tw.innerHTML = renderTraits(st);
 
   const answers = st.refl.yes + st.refl.neutral + st.refl.no;
   const proud = answers ? Math.round(st.refl.yes / answers * 100) + ' %' : '–';
   document.getElementById('stats').innerHTML = [
-    statTile(proud, 'der Tage stolz auf mich' + (answers ? ' · ' + plural(answers, 'Antwort', 'Antworten') : '')),
+    statTile(proud, 'der Tage stolz auf mich'),
     statTile(fmtN(st.total), 'XP gesamt'),
     statTile(st.longest, 'längste Serie'),
     statTile(st.perfectDays, st.perfectDays === 1 ? 'perfekter Tag' : 'perfekte Tage'),
@@ -27598,7 +27756,7 @@ function renderChar(st) {
     statTile(st.notes, st.notes === 1 ? 'Notiz' : 'Notizen'),
   ].join('');
 
-  const mi = moodInsight(st);
+  const mi = ch_moodText(st);
   const miEl = document.getElementById('mood-insight');
   if (miEl) miEl.innerHTML = (mi ? `<div class="card"><div class="muted">Stimmung &amp; Training</div><div style="margin-top:4px">${mi}</div></div>` : '') + (typeof cd_charCard === 'function' ? cd_charCard(st) : '');
 
@@ -27610,6 +27768,22 @@ function renderChar(st) {
       + `<div class="muted" style="font-size:10px;margin-top:2px">${RARITY[a.r]}</div></div>`;
   }).join('');
   ch_scrollHint(trEl);
+}
+
+// Einstellungen & Daten als Sheet (Zahnrad im Ich-Tab): Backup, automatische Sicherungen, Demo, Zurücksetzen.
+function ch_openSettings() {
+  const sh = document.getElementById('sheet');
+  sh.innerHTML = `<div class="handle"></div><h2>Einstellungen &amp; Daten</h2>`
+    + `<div class="muted" style="margin:6px 0 4px">Deine Daten liegen nur auf diesem Gerät. Exportiere sie regelmässig als Datei – so nimmst du deine Welt aufs nächste Handy mit.</div>`
+    + `<div class="set-lbl">Backup</div>`
+    + `<div class="split"><button class="btn block" onclick="exportData()">Exportieren</button><label class="btn block" style="cursor:pointer">Importieren<input type="file" accept="application/json" style="display:none" onchange="importData(this)"></label></div>`
+    + (typeof bk_openList === 'function' ? `<button class="btn block" id="bk-auto-btn" style="margin-top:10px" onclick="bk_openList()">Automatische Sicherungen</button>` : '')
+    + `<div class="set-lbl">Demo</div>`
+    + `<div class="split"><button class="btn block" onclick="closeSheet();seedDemo(45)">45 Tage</button><button class="btn block" onclick="closeSheet();seedDemo(420)">Endgame</button></div>`
+    + `<div class="muted" style="margin-top:8px">Beispiel-Verläufe füllen Welt und Kalender. Deine echten Daten werden vorher gesichert.</div>`
+    + `<div class="set-lbl">Gefahrenzone</div>`
+    + `<button class="btn block danger" onclick="resetAll()">Alles zurücksetzen</button>`;
+  document.getElementById('sheet-bg').classList.add('open');
 }
 
 // Die Trophäen-Reihe scrollt seitwärts. Ein weicher Verlauf am Rand zeigt, dass dort noch etwas kommt –
@@ -27948,7 +28122,7 @@ function renderFriends(st) {
   const list = [me].concat(Array.isArray(S.friends) ? S.friends : []);
   list.sort((a, b) => b.level - a.level || (b.streak || 0) - (a.streak || 0));
   const npcHtml = typeof renderNpcSection === 'function' ? renderNpcSection() : '';
-  el.innerHTML = npcHtml + `<div class="pad" style="padding-bottom:6px"><h3>Bestenliste</h3></div>` + list.map((f, i) => fr_row(f, i + 1)).join('');
+  el.innerHTML = npcHtml + `<div class="me-sec"><h3>Bestenliste</h3></div>` + list.map((f, i) => fr_row(f, i + 1)).join('');
 }
 
 function openMyCode() {
@@ -28132,23 +28306,21 @@ async function logNpcTime(id) {
 function renderNpcSection() {
   np_ensure();
   const loggedToday = S.npcLog[todayKey()] || [];
+  // Ruhige Zeile pro Person: Avatar, Name, «Level · zuletzt», ein Knopf. Fortschritt als dünne Linie unter dem Namen.
   const rows = NPCS.map(n => {
     const done = loggedToday.includes(n.id);
     const aff = Math.max(0, (S.npcs[n.id] && S.npcs[n.id].aff) || 0);
     const lvl = np_level(aff);
     const lo = np_need(lvl), hi = np_need(lvl + 1);
     const pct = hi > lo ? Math.max(0, Math.min(1, (aff - lo) / (hi - lo))) : 1;
-    const left = Math.max(1, hi - aff);
-    return `<div class="friend" style="cursor:default;align-items:flex-start">`
-      + `<div class="favatar" style="background:${n.color};margin-top:2px">${n.i}</div>`
-      + `<div class="fb"><div class="fn" style="display:flex;align-items:center;gap:8px">${n.n}<span class="np-lv" style="margin-left:auto;flex:none;white-space:nowrap;font-weight:600;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--line);color:var(--muted)">Level ${lvl}</span></div>`
-      + `<div class="np-bar" style="height:5px;border-radius:3px;background:var(--line);overflow:hidden;margin:7px 0 5px">`
-      + `<i style="display:block;height:100%;border-radius:3px;width:${(pct * 100).toFixed(1)}%;background:${n.color}"></i></div>`
-      + `<div class="ft muted">noch ${plural(left, 'Tag', 'Tage')} bis Level ${lvl + 1} · zuletzt: ${np_lastText(n.id)}</div></div>`
-      + `<button class="cz-ib" style="margin-top:4px" ${done ? 'disabled' : ''} onclick="logNpcTime('${n.id}')">${done ? 'Heute ✓' : 'Zeit verbringen'}</button></div>`;
+    return `<div class="friend np-row" style="cursor:default">`
+      + `<div class="favatar" style="background:${n.color}">${n.i}</div>`
+      + `<div class="fb"><div class="fn">${n.n}</div>`
+      + `<div class="ft muted">Level ${lvl} · zuletzt ${np_lastText(n.id)}</div>`
+      + `<div class="np-bar"><i style="width:${(pct * 100).toFixed(1)}%;background:${n.color}"></i></div></div>`
+      + `<button class="cz-ib np-btn${done ? ' done' : ''}" ${done ? 'disabled' : ''} onclick="logNpcTime('${n.id}')" aria-label="${done ? 'Heute schon Zeit verbracht mit ' + n.n : 'Zeit verbracht mit ' + n.n}">${done ? 'Heute ✓' : 'Zeit'}</button></div>`;
   }).join('');
-  return `<div class="pad" style="padding-bottom:6px"><h3>Menschen</h3>`
-    + `<div class="muted" style="font-size:13px;margin-top:2px">Einmal pro Tag und Person. Das Beziehungs-Level wächst mit den Tagen, die du wirklich da warst.</div></div>` + rows;
+  return `<div class="me-sec"><h3>Menschen</h3><div class="muted">Einmal pro Tag: Mit wem hast du heute wirklich Zeit verbracht?</div></div>` + rows;
 }
 
 /* ===================== mood.js ===================== */
@@ -28285,7 +28457,8 @@ let cd_draft = null;
 
 // ---------- Zeitfenster ----------
 function cd_available(d) {
-  const h = (d || new Date()).getHours();
+  // rt_clock (routine.js) = echte Uhr, ausser ui-shot/shot setzen --time (dann zeigt auch der Screenshot den Abend-Knopf)
+  const h = (d || (typeof rt_clock === 'function' ? rt_clock() : new Date())).getHours();
   return h >= CD_START_H || h < CD_END_H;
 }
 
@@ -28763,6 +28936,57 @@ function cf_loreBoss(name) { return addLore(`Nach harter Arbeit besiegte ${name}
 function cf_loreAch(name, a) { return addLore(`${name} schaltete die Trophäe «${a.n}» frei.`); }
 function cf_loreStreak(name, n) { return addLore(`${name} hielt ${n} Tage in Folge durch.`); }
 
+// ---- Archiv: ein Sheet für alles, was man alle paar Wochen anschaut (Eintrag am Ende des Kalender-Tabs) ----
+const ARCHIVE_ICON = {
+  feed: '<path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.2"/>',
+  lore: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/>',
+  travel: '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  time: '<path d="M6 2h12M6 22h12M7 2c0 5 10 6 10 10S7 17 7 22M17 2c0 5-10 6-10 10s10 5 10 10"/>',
+  weight: '<rect x="3" y="4" width="18" height="17" rx="4"/><path d="M8.5 10a5 5 0 0 1 7 0l-2 3h-3z"/>',
+};
+function archiveItems() {
+  cf_ensure();
+  const n = (v, one, many, none) => v ? plural(v, one, many) : none;
+  const kg = S.weight && typeof S.weight === 'object' ? Object.keys(S.weight).length : 0;
+  return [
+    { id: 'feed', n: 'Neuigkeiten', sub: n(S.feed.length, 'Eintrag', 'Einträge', 'Noch leer'), fn: 'openFeed' },
+    { id: 'lore', n: 'Geschichte', sub: n(S.lore.length, 'Eintrag', 'Einträge', 'Beginnt mit dem ersten Level-Up'), fn: 'openLore' },
+    { id: 'travel', n: 'Reisen', sub: n((S.trips || []).length, 'Ort', 'Orte', 'Noch keine'), fn: 'openTravel' },
+    { id: 'time', n: 'Zeitmaschine', sub: 'Du heute und früher', fn: 'openTimeMachine' },
+    { id: 'weight', n: 'Gewicht', sub: n(kg, 'Eintrag', 'Einträge', 'Noch keine Einträge'), fn: 'openWeightLog' },
+  ];
+}
+function archiveRow(it, onclick, sub) {
+  const chev = typeof CHEVRON === 'string' ? CHEVRON : '›';
+  return `<button class="sa-row" onclick="${onclick}"><span class="sa-ic"><svg viewBox="0 0 24 24">${ARCHIVE_ICON[it.id] || ARCHIVE_ICON.lore}</svg></span>`
+    + `<span class="sa-tx"><b>${it.n}</b><span class="muted">${sub}</span></span><span class="sa-ch">${chev}</span></button>`;
+}
+function openArchive() {
+  const sh = document.getElementById('sheet');
+  sh.innerHTML = `<div class="handle"></div><h2>Archiv</h2>`
+    + `<div class="muted" style="margin:6px 0 16px">Zum Zurückblicken – alles, was du nicht jeden Tag brauchst.</div>`
+    + `<div class="sa-list">` + archiveItems().map(it => archiveRow(it, `sa_open('${it.fn}')`, esc(it.sub))).join('') + `</div>`;
+  document.getElementById('sheet-bg').classList.add('open');
+}
+// Öffnet einen Archiv-Eintrag und setzt oben einen «‹ Archiv»-Knopf, damit man zurück zur Liste kommt.
+async function sa_open(fn) {
+  const f = typeof window !== 'undefined' ? window[fn] : null;
+  if (typeof f !== 'function') return;
+  await f();
+  const sh = document.getElementById('sheet');
+  if (!sh || typeof sh.innerHTML !== 'string' || sh.innerHTML.indexOf('sa-back') >= 0) return;
+  const back = `<button class="sa-back" onclick="openArchive()" aria-label="Zurück zum Archiv">‹ Archiv</button>`;
+  const h = '<div class="handle"></div>';
+  if (sh.innerHTML.indexOf(h) === 0) sh.innerHTML = h + back + sh.innerHTML.slice(h.length);
+  else sh.insertAdjacentHTML('afterbegin', back);
+}
+// Eintrag am Ende des Kalender-Tabs
+function archiveEntry() {
+  return `<button class="sa-entry" onclick="openArchive()"><span class="sa-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4"/></svg></span>`
+    + `<span class="sa-tx"><b>Archiv</b><span class="muted">Neuigkeiten, Geschichte, Reisen und mehr</span></span>`
+    + `<span class="sa-ch">${typeof CHEVRON === 'string' ? CHEVRON : '›'}</span></button>`;
+}
+
 /* ===================== deeplink.js ===================== */
 // deeplink.js — Deep-Links (#do=work, #do=med,grat) und Zahl auf dem App-Icon (Badge).
 // Sicherheitsregeln: Links dürfen Quests nur SETZEN (nie umschalten, nie löschen), nichts importieren und nur
@@ -28866,21 +29090,56 @@ const SCREENS = {
 let activeScreen = 'world';
 const dirtyScreens = new Set(Object.keys(SCREENS));
 
+// Tab-Leiste: Welt · Heute · Kalender · Ich. «Ich» vereint drei Bereiche (Profil, Ziele, Freunde) als Segmente.
+// Intern bleiben die alten Namen (char/goals/friends) die Bildschirm-Schlüssel – go('goals') öffnet also «Ich › Ziele».
+const ME_SEGS = ['char', 'goals', 'friends'];
+// Weitere Namen, die auf einen Tab/ein Segment umleiten (alte Links, deutsche Bezeichnungen).
+const TAB_ALIAS = {
+  ich: 'me', profil: 'char', profile: 'char', charakter: 'char', character: 'char', ziele: 'goals',
+  freunde: 'friends', heute: 'quests', today: 'quests', kalender: 'cal', calendar: 'cal', welt: 'world', home: 'world',
+};
+let meSeg = 'char';
+
+// Welcher Tab der Leiste gehört zu einem Bildschirm-Schlüssel?
+function tabOf(t) { return ME_SEGS.includes(t) ? 'me' : t; }
+// Name (auch alt oder Alias) → Bildschirm-Schlüssel aus SCREENS, sonst null.
+function resolveScreen(t) {
+  t = String(t || '');
+  if (TAB_ALIAS[t.toLowerCase()]) t = TAB_ALIAS[t.toLowerCase()];
+  if (t === 'me') t = meSeg;
+  return SCREENS[t] ? t : null;
+}
+
 function drawScreen(t, st) {
-  SCREENS[t](st || stats());
+  st = st || stats();
+  SCREENS[t](st);
+  if (ME_SEGS.includes(t) && typeof me_head === 'function') me_head(st);
   dirtyScreens.delete(t);
 }
 
 function go(t) {
-  if (!SCREENS[t]) return;
+  t = resolveScreen(t);
+  if (!t) return;
+  const tab = tabOf(t);
+  const seg = tab === 'me' && t !== activeScreen;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('s-' + t).classList.add('active');
-  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x.dataset.t === t));
+  document.getElementById('s-' + tab).classList.add('active');
+  if (tab === 'me') {
+    meSeg = t;
+    document.querySelectorAll('.me-panel').forEach(p => p.classList.toggle('active', p.id === 's-' + t));
+    document.querySelectorAll('#me-seg button').forEach(b => b.classList.toggle('on', b.dataset.s === t));
+    // Segmentwechsel beginnt oben unter der Umschaltung, nicht mitten in der vorherigen Liste
+    const me = document.getElementById('s-me');
+    if (seg && me && me.scrollTop > 0) { const top = document.querySelector('.me-top'); me.scrollTop = Math.min(me.scrollTop, (top && top.offsetHeight) || 0); }
+  }
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x.dataset.t === tab));
   activeScreen = t;
   if (dirtyScreens.has(t)) drawScreen(t);
   else if (t === 'world' && typeof cz_markSel === 'function') cz_markSel();
   if (typeof demoBanner === 'function') demoBanner();
 }
+// Alias für ältere Aufrufe/Deep-Links
+function showTab(t) { go(t); }
 
 function render() {
   const st = stats();
